@@ -15,6 +15,7 @@ class Complex{
   //Сопряженное число
   Complex Conjugate(){
     Complex Result;
+    Result.real = real;
     Result.image = -image;
     return Result;
   };
@@ -50,9 +51,12 @@ class Complex{
 
   //Деление на комплексное число
   Complex operator/(Complex C){
-    Complex Result = *this * C;
+    Complex Result = *this * C.Conjugate();
     return Result/C.conjmult();
   }
+
+  //Деление действительного числа на комплексное
+  friend Complex operator/(double d, Complex C);
 
   //Вывод числа
   void print()
@@ -62,25 +66,38 @@ class Complex{
     if (image > 0) {cout << real << " + " << image << "i\n";}
     else {cout << real << " - " << -image << "i\n";}
   }
-
+  //Геттеры и сеттеры
   double getReal() {return real;}
   double getImage() {return image;}
 
   void SetReal(double value) {real = value;}
   void SetImage(double value) {image = value;}
 
-  double Module() {return sqrt(real*real + image*image);}
 };
 
-int main()
-{
-  Complex Z(1, -2);
+Complex operator/(double d, Complex C){
+  Complex Result;
+  Result.real = d * (C.Conjugate()).real;
+  Result.image = d * (C.Conjugate()).image;
+  return Result / C.conjmult();
+}
+
+int main(){
+  Complex Z(-1, -2);
   Complex W(1, -1);
-//  Complex H = Z + W;
-//  H.print();
-//  Z.print();
-//  W.print();
-  (Z*W).print();
+
+  Z.print();
+  (Z.Conjugate()).print(); //Сопряженное для Z
+  (Z*W).print(); //Умножение комплексных чисел
+  cout << "\n";
+
+  //Для задания 1.1
+  (+Z).print();
+  (Z/4).print();
   (Z/W).print();
+  cout << "\n";
+
+  //Для задания 1.2
+  (2/W).print();
   return 0;
 }
