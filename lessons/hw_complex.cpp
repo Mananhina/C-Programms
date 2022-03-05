@@ -1,5 +1,4 @@
 #include <iostream>
-#include <math.h>
 using namespace std;
 
 class Complex{
@@ -19,7 +18,6 @@ class Complex{
     Result.image = -image;
     return Result;
   };
-
 
 
   //Унарный плюс
